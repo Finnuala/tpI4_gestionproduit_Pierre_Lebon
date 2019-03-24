@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  web:
+    container_name: php5
+    build: .
+    ports:
+      - "80:80"
+    links:
+      - db
+      - minio
+  db:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABSE: gestion_produits
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./database/gestion_produits.sql:/docker-entrypoint-initdb.d/gestion_produits.sql
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: root
+      MINIO_SECRET_KEY: rootpassword
+    volumes:
+      - ./minio-data1:/export
+    command: server /export
