@@ -2,7 +2,7 @@ version: "3"
 
 services:
   web:
-    image: 127.0.0.1:5000/web_stackOrchestrator
+    image: 127.0.0.1:5000/php
     container_name: php5
     build: .
     ports:
@@ -13,7 +13,7 @@ services:
       - db
 
   db:
-    image: 127.0.0.1:5000/db_stackOrchestrator
+    image: 127.0.0.1:5000/mysql
     ports:
       - "3306:3306"
     deploy:
