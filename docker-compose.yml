@@ -2,17 +2,22 @@ version: "3"
 
 services:
   web:
+    image: 127.0.0.1:5000/web_stackOrchestrator
     container_name: php5
     build: .
     ports:
       - "80:80"
+    deploy:
+      replicas: 2
     links:
       - db
-      - minio
+
   db:
-    image: mysql:5.7
+    image: 127.0.0.1:5000/db_stackOrchestrator
     ports:
       - "3306:3306"
+    deploy:
+      replicas: 2
     environment:
       MYSQL_DATABSE: gestion_produits
       MYSQL_ROOT_USER: root
@@ -22,11 +27,16 @@ services:
 
   minio:
     image: minio/minio
+    volumes:
+      - minio-data:/export
     ports:
       - "9000:9000"
+    deploy:
+      replicas: 2
     environment:
       MINIO_ACCESS_KEY: root
-      MINIO_SECRET_KEY: rootpassword
-    volumes:
-      - ./minio-data1:/export
-    command: server /export
+      MINIO_SECRET_KEY: root
+    command: server http://minio/export
+
+volumes:
+  minio-data:
