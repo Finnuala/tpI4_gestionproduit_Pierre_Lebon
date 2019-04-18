@@ -23,13 +23,19 @@ L'application permet de :
 ## Orchestrateur
 Afin de mettre en place un Orchestrateur (Docker Swarm) et de faciliter l'intégration de cette application, plusieurs commandes ont été exécutées :
 - docker swarm init --advertise-addr 192.168.9.115
+  ==> Initialisation de notre swarm
 
 - docker service create --name registry --publish published=5000,target=5000 registry:2
+  ==> Création de notre registry
 
-- docker-compose up -d
+- docker tag 'tagImage' 127.0.0.1:5000/'nomImage'
+  Par exemple : docker tag 99999999 127.0.0.1:5000/php (le tag peut être récupéré par la commande docker images)
+  ==> Création des images destinées à l'Orchestrateur
 
 - docker-compose push
+  ==> On pousse les images sur notre swarm
 
 - docker stack deploy --compose-file docker-compose.yml stackOrchestrator
+  ==> Création d'une stack déployée sur le swarm
 
 Le docker-compose.yml a été mis à jour en conséquence.
