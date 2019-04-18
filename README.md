@@ -19,3 +19,17 @@ L'application permet de :
 - Modifier les produits
 - Supprimer les produits
 - Pour chaque produit, il est possible d'ajouter autant de photos que nécessaire
+
+## Orchestrateur
+Afin de mettre en place un Orchestrateur (Docker Swarm) et de faciliter l'intégration de cette application, plusieurs commandes ont été exécutées :
+- docker swarm init --advertise-addr 192.168.9.115
+
+- docker service create --name registry --publish published=5000,target=5000 registry:2
+
+- docker-compose up -d
+
+- docker-compose push
+
+- docker stack deploy --compose-file docker-compose.yml stackOrchestrator
+
+Le docker-compose.yml a été mis à jour en conséquence.
